@@ -69,6 +69,7 @@ jobs:
         with:
           key: windows-arm64-package
           save-if: ${{ github.ref == 'refs/heads/main' }}
+      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
       - name: Install WiX
         uses: storytold/craft-common-actions/actions/install-wix@main
         with:

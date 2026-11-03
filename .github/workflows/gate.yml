@@ -234,6 +234,8 @@ jobs:
           save-if: ${{ github.event_name != 'pull_request' && (github.ref_name == github.event.repository.default_branch || (inputs.cache-save-on-dispatch && github.event_name == 'workflow_dispatch')) }}
           cache-on-failure: true
 
+      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
+
       - name: Gate
         shell: bash
         env:

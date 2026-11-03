@@ -95,6 +95,20 @@ gpg --armor --export-secret-subkeys <signing-subkey-fingerprint>! | gh secret se
 
 Without the secret the release is published unsigned, with a warning.
 
+#### Generated sources (opt-in)
+
+An app whose repository leaves generated sources out (for instance vendored bindings that a
+generator rebuilds) defines a `prepare` cargo alias in its `.cargo/config.toml`:
+
+```toml
+[alias]
+prepare = "xtask prepare"
+```
+
+Every job of `release.yml`, `windows-arm64.yml` and `gate.yml` that builds the app runs
+`cargo prepare` through `actions/cargo-prepare` after the Rust cache is restored. Apps without
+the alias are unaffected.
+
 #### Automatic contributor credits (opt-in)
 
 Apps with `scripts/refresh-contributors.py` can refresh bundled credits once before a release.

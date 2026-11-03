@@ -1,0 +1,16 @@
+name: "Run cargo prepare"
+description: "Runs the caller's `cargo prepare` (a cargo alias that writes generated sources before a build), if it defines one"
+
+runs:
+  using: "composite"
+  steps:
+    # An app opts in by defining a `prepare` alias in its `.cargo/config.toml`;
+    # `cargo --list` names aliases too. Without one this action changes nothing.
+    - name: cargo prepare
+      shell: bash
+      run: |
+        if cargo --list | awk '{ print $1 }' | grep -qx prepare; then
+          cargo prepare
+        else
+          echo "No cargo prepare alias in this repository; nothing to prepare."
+        fi
