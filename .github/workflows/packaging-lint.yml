@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Run packaging lint
-        uses: storytold/craft-common-actions/actions/packaging-lint@main
+        uses: top-master/rust-craft-actions/actions/packaging-lint@main
         with:
           actionlint-version: ${{ inputs.actionlint-version }}
       - name: App-specific packaging checks

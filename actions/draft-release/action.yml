@@ -32,13 +32,13 @@ runs:
 
     - name: Import the Linux signing key
       id: key
-      uses: storytold/craft-common-actions/actions/import-signing-key@main
+      uses: top-master/rust-craft-actions/actions/import-signing-key@main
       with:
         key: ${{ inputs.signing-key }}
 
     - name: Install the signing tools
       if: steps.key.outputs.enabled == 'true'
-      uses: storytold/craft-common-actions/actions/install-apt-packages@main
+      uses: top-master/rust-craft-actions/actions/install-apt-packages@main
       with:
         packages: rpm debsigs skopeo binutils
 

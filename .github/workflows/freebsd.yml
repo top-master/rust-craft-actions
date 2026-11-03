@@ -74,11 +74,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Check out craft-fonts
         if: inputs.craft-fonts-ref != ''
-        uses: storytold/craft-common-actions/actions/checkout-craft-fonts@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-fonts@main
         with:
           ref: ${{ inputs.craft-fonts-ref }}
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
       # The architecture is interpolated into the guest's shell source below.
       - name: Validate the architecture
         env:
@@ -175,7 +175,7 @@ jobs:
         id: cargo-cache
         continue-on-error: true
         timeout-minutes: 10
-        uses: storytold/craft-common-actions/actions/freebsd-cargo-cache@main
+        uses: top-master/rust-craft-actions/actions/freebsd-cargo-cache@main
         with:
           configuration: ${{ toJSON(inputs) }}
           source-hash: ${{ hashFiles('**/Cargo.lock', '**/Cargo.toml', '**/build.rs', '.cargo/**', 'rust-toolchain*', 'packaging/**', '.github/workflows/freebsd.yml') }}
@@ -251,7 +251,7 @@ jobs:
         continue-on-error: true
         timeout-minutes: 10
         if: inputs.run-package-check && matrix.arch != 'aarch64'
-        uses: storytold/craft-common-actions/actions/freebsd-cargo-cache@main
+        uses: top-master/rust-craft-actions/actions/freebsd-cargo-cache@main
         with:
           phase: package
           configuration: ${{ toJSON(inputs) }}
@@ -288,7 +288,7 @@ jobs:
         if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && steps.cargo-cache.outputs.key != '' && steps.cargo-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 10
-        uses: storytold/craft-common-actions/actions/freebsd-cargo-cache@main
+        uses: top-master/rust-craft-actions/actions/freebsd-cargo-cache@main
         with:
           phase: save
           configuration: ${{ toJSON(inputs) }}

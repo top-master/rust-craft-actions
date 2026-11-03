@@ -12,7 +12,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = yaml.load((ROOT / '.github/workflows/gate.yml').read_text(), Loader=yaml.BaseLoader)
 STEPS = WORKFLOW['jobs']['gate']['steps']
-OWN_ACTION = re.compile(r'^storytold/craft-common-actions/actions/[a-z0-9-]+@main$')
+OWN_ACTION = re.compile(r'^top-master/rust-craft-actions/actions/[a-z0-9-]+@main$')
 
 
 def step(name):

@@ -188,7 +188,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - id: v
         name: Resolve version
-        uses: storytold/craft-common-actions/actions/resolve-version@main
+        uses: top-master/rust-craft-actions/actions/resolve-version@main
         with:
           input-version: ${{ inputs.version }}
           app-title: ${{ inputs.app-title }}
@@ -281,11 +281,11 @@ jobs:
           path: contributors
       - name: Check out craft-fonts
         if: inputs.craft-fonts-ref != ''
-        uses: storytold/craft-common-actions/actions/checkout-craft-fonts@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-fonts@main
         with:
           ref: ${{ inputs.craft-fonts-ref }}
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
         with:
           toolchain: stable
@@ -293,7 +293,7 @@ jobs:
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
           key: release-macos-universal
-      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
+      - uses: top-master/rust-craft-actions/actions/cargo-prepare@main
       - name: Apply version override
         if: inputs.version != ''
         run: cargo xtask version set "$VERSION"
@@ -438,11 +438,11 @@ jobs:
           path: contributors
       - name: Check out craft-fonts
         if: inputs.craft-fonts-ref != ''
-        uses: storytold/craft-common-actions/actions/checkout-craft-fonts@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-fonts@main
         with:
           ref: ${{ inputs.craft-fonts-ref }}
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
         with:
           toolchain: stable
@@ -450,13 +450,13 @@ jobs:
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
           key: release-windows-${{ matrix.arch }}
-      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
+      - uses: top-master/rust-craft-actions/actions/cargo-prepare@main
       - name: Apply version override
         if: inputs.version != ''
         shell: bash
         run: cargo xtask version set "$VERSION"
       - name: Install WiX
-        uses: storytold/craft-common-actions/actions/install-wix@main
+        uses: top-master/rust-craft-actions/actions/install-wix@main
         with:
           wix-version: ${{ inputs.wix-version }}
       - name: Build, sign, package
@@ -550,12 +550,12 @@ jobs:
           path: contributors
       - name: Check out craft-fonts
         if: inputs.craft-fonts-ref != ''
-        uses: storytold/craft-common-actions/actions/checkout-craft-fonts@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-fonts@main
         with:
           ref: ${{ inputs.craft-fonts-ref }}
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
-      - uses: storytold/craft-common-actions/actions/install-linux-deps@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
+      - uses: top-master/rust-craft-actions/actions/install-linux-deps@main
         with:
           deb-arch: ${{ matrix.deb }}
           nfpm-version: ${{ inputs.nfpm-version }}
@@ -565,7 +565,7 @@ jobs:
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
           key: release-linux-${{ matrix.arch }}
-      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
+      - uses: top-master/rust-craft-actions/actions/cargo-prepare@main
       - name: Apply version override
         if: inputs.version != ''
         run: cargo xtask version set "$VERSION"
@@ -672,7 +672,7 @@ jobs:
       - name: Import the Linux signing key
         if: github.ref == 'refs/heads/release'
         # flatpak-bundle.sh signs the commit and embeds the public key when SIGNING_FPR is set.
-        uses: storytold/craft-common-actions/actions/import-signing-key@main
+        uses: top-master/rust-craft-actions/actions/import-signing-key@main
         with:
           key: ${{ secrets.LINUX_SIGNING_KEY }}
       - name: Build the Flatpak bundle
@@ -757,7 +757,7 @@ jobs:
           fi
           tarball="${tarballs[0]}"
           echo "path=$tarball" >>"$GITHUB_OUTPUT"
-      - uses: storytold/craft-common-actions/actions/arch-package@main
+      - uses: top-master/rust-craft-actions/actions/arch-package@main
         with:
           tarball: ${{ steps.tarball.outputs.path }}
           arch: ${{ matrix.arch }}
@@ -855,11 +855,11 @@ jobs:
           path: contributors
       - name: Check out craft-fonts
         if: inputs.craft-fonts-ref != ''
-        uses: storytold/craft-common-actions/actions/checkout-craft-fonts@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-fonts@main
         with:
           ref: ${{ inputs.craft-fonts-ref }}
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
       - name: Start the FreeBSD VM
         uses: vmactions/freebsd-vm@c46abacb49f09938ca4e1702d15d836285d694cc # v1.5.9
         with:
@@ -948,7 +948,7 @@ jobs:
         id: cargo-cache
         continue-on-error: true
         timeout-minutes: 10
-        uses: storytold/craft-common-actions/actions/freebsd-cargo-cache@main
+        uses: top-master/rust-craft-actions/actions/freebsd-cargo-cache@main
         with:
           profile: release
           configuration: ${{ toJSON(inputs) }}
@@ -1029,7 +1029,7 @@ jobs:
         if: github.event_name != 'pull_request' && github.event_name != 'pull_request_target' && steps.cargo-cache.outputs.key != '' && steps.cargo-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 10
-        uses: storytold/craft-common-actions/actions/freebsd-cargo-cache@main
+        uses: top-master/rust-craft-actions/actions/freebsd-cargo-cache@main
         with:
           phase: save
           profile: release
@@ -1109,17 +1109,17 @@ jobs:
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
           key: release-web
-      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
-      - uses: storytold/craft-common-actions/actions/install-trunk@main
+      - uses: top-master/rust-craft-actions/actions/cargo-prepare@main
+      - uses: top-master/rust-craft-actions/actions/install-trunk@main
         with:
           trunk-version: ${{ inputs.trunk-version }}
       - name: Check out craft-fonts
         if: inputs.web-craft-fonts && inputs.craft-fonts-ref != ''
-        uses: storytold/craft-common-actions/actions/checkout-craft-fonts@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-fonts@main
         with:
           ref: ${{ inputs.craft-fonts-ref }}
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
       - name: Apply version override
         if: inputs.version != ''
         run: cargo xtask version set "$VERSION"
@@ -1209,11 +1209,11 @@ jobs:
           path: contributors
       - name: Check out craft-fonts
         if: inputs.craft-fonts-ref != ''
-        uses: storytold/craft-common-actions/actions/checkout-craft-fonts@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-fonts@main
         with:
           ref: ${{ inputs.craft-fonts-ref }}
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
         with:
           toolchain: stable
@@ -1221,13 +1221,13 @@ jobs:
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
           key: release-linux-riscv64
-      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
+      - uses: top-master/rust-craft-actions/actions/cargo-prepare@main
       - name: Apply version override
         if: inputs.version != ''
         run: cargo xtask version set "$VERSION"
-      - uses: storytold/craft-common-actions/actions/install-riscv64-cross@main
+      - uses: top-master/rust-craft-actions/actions/install-riscv64-cross@main
       - name: Install nfpm (SHA256-verified)
-        uses: storytold/craft-common-actions/actions/install-nfpm@main
+        uses: top-master/rust-craft-actions/actions/install-nfpm@main
         with:
           nfpm-version: ${{ inputs.nfpm-version }}
           deb-arch: amd64
@@ -1286,14 +1286,14 @@ jobs:
           name: ${{ inputs.contributors-artifact }}
           path: contributors
       - name: Check out craft-i18n
-        uses: storytold/craft-common-actions/actions/checkout-craft-i18n@main
+        uses: top-master/rust-craft-actions/actions/checkout-craft-i18n@main
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # v1
         with:
           toolchain: stable
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
         with:
           key: release-server-${{ matrix.arch }}
-      - uses: storytold/craft-common-actions/actions/cargo-prepare@main
+      - uses: top-master/rust-craft-actions/actions/cargo-prepare@main
       - name: Apply version override
         if: inputs.version != ''
         run: cargo xtask version set "$VERSION" || cargo run --locked -q -p xtask -- version set "$VERSION" || true
@@ -1321,7 +1321,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: storytold/craft-common-actions/actions/draft-release@main
+      - uses: top-master/rust-craft-actions/actions/draft-release@main
         with:
           version: ${{ needs.version.outputs.version }}
           app-title: ${{ inputs.app-title }}

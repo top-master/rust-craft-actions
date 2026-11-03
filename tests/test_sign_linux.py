@@ -133,7 +133,7 @@ class SignLinuxTests(unittest.TestCase):
 class SigningWiringTests(unittest.TestCase):
     def test_the_release_job_signs_with_the_linux_key(self):
         self.assertIn("LINUX_SIGNING_KEY", WORKFLOW["on"]["workflow_call"]["secrets"])
-        draft = next(s for s in WORKFLOW["jobs"]["release"]["steps"] if s.get("uses", "").startswith("storytold/craft-common-actions/actions/draft-release@"))
+        draft = next(s for s in WORKFLOW["jobs"]["release"]["steps"] if s.get("uses", "").startswith("top-master/rust-craft-actions/actions/draft-release@"))
         self.assertEqual(draft["with"]["signing-key"], "${{ github.ref == 'refs/heads/release' && secrets.LINUX_SIGNING_KEY || '' }}")
         names = [s.get("name") for s in DRAFT["runs"]["steps"]]
         # Embedded signatures change the rpm and deb files, so they come before the checksums.
@@ -144,7 +144,7 @@ class SigningWiringTests(unittest.TestCase):
         self.assertEqual(job["environment"], "release")
         uses = [s.get("uses", "") for s in job["steps"]]
         names = [s.get("name") for s in job["steps"]]
-        imported = next(i for i, u in enumerate(uses) if u.startswith("storytold/craft-common-actions/actions/import-signing-key@"))
+        imported = next(i for i, u in enumerate(uses) if u.startswith("top-master/rust-craft-actions/actions/import-signing-key@"))
         self.assertEqual(job["steps"][imported]["with"]["key"], "${{ secrets.LINUX_SIGNING_KEY }}")
         self.assertEqual(job["steps"][imported]["if"], "github.ref == 'refs/heads/release'")
         self.assertEqual(job["env"]["OCI_SIGNATURES_READY"], "${{ vars.LINUX_OCI_SIGNATURES_READY }}")

@@ -23,7 +23,7 @@ runs:
           libasound2-dev pkg-config \
           desktop-file-utils appstream python3-yaml zsync
 
-    - uses: storytold/craft-common-actions/actions/install-nfpm@main
+    - uses: top-master/rust-craft-actions/actions/install-nfpm@main
       with:
         nfpm-version: ${{ inputs.nfpm-version }}
         deb-arch: ${{ inputs.deb-arch }}
